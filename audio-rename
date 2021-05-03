@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+set -e -u
+prog="${0##*/}"
+eval ': "${IFS@L}"' 2>/dev/null || {
+    echo "$prog: bash >= 5.1 is required" >&2
+    exit 1
+}
+if [ $# -eq 0 ]
+then
+    echo "$prog: FILE [FILE...]" >&2
+    exit 1
+fi
+IFS=$'\x1F'
+for file in "$@"
+do
+    data=$(operon print -p "<artist>$IFS<title>" -- "$file")
+    read artist title <<< "$data"
+    artist=${artist@L}
+    artist=${artist//[!a-z]/-}
+    title=${title@L}
+    title=${title//[!a-z]/-}
+    mv -v -- "$file" "${artist}_${title}.m4a"
+done
+
+# vim:ts=4 sts=4 sw=4 et
