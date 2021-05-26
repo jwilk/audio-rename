@@ -15,8 +15,10 @@ for file in "$@"
 do
     data=$(operon print -p "<artist>$IFS<title>" -- "$file")
     read artist title <<< "$data"
+    artist=$(uconv -x Any-ASCII <<< "$artist")
     artist=${artist@L}
     artist=${artist//[!a-z]/-}
+    title=$(uconv -x Any-ASCII <<< "$title")
     title=${title@L}
     title=${title//[!a-z]/-}
     mv -v -- "$file" "${artist}_${title}.m4a"
