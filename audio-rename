@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
+
+# Copyright © 2021-2023 Jakub Wilk <jwilk@jwilk.net>
+# SPDX-License-Identifier: MIT
+
 set -e -u
 prog="${0##*/}"
 eval ': "${IFS@L}"' 2>/dev/null || {
